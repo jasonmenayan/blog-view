@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles.css'
 
 function Tile(props) {
   console.log('tiledata:', props.tiledata);
@@ -10,9 +11,7 @@ function Tile(props) {
             <div className="title">
               {props.tiledata.title}
             </div>
-            <div className="bodytext">
-              {props.tiledata.body}
-            </div>
+            <div className="bodytext" dangerouslySetInnerHTML={{__html: props.tiledata.body}} />
           </div>
         );
       case 'quote':
@@ -63,9 +62,7 @@ function Tile(props) {
             <div className="audioplaycount">
               {props.tiledata.plays}
             </div>
-            <div className="caption">
-              {props.tiledata.caption.length > 0 && props.tiledata.caption}
-            </div>
+            <div className="caption" dangerouslySetInnerHTML={{__html: props.tiledata.caption.length > 0 && props.tiledata.caption}} />
           </div>
         );
       case 'photo':
@@ -74,9 +71,7 @@ function Tile(props) {
             <div className="image">
               <img src={props.tiledata.photos[0].alt_sizes[0].url} alt={props.tiledata.photos[0].caption} role="presentation" />
             </div>
-            <div className="caption">
-              {props.tiledata.caption.length > 0 && props.tiledata.caption}
-            </div>
+            <div className="caption" dangerouslySetInnerHTML={{__html: props.tiledata.caption}} />
           </div>
         );
       case 'chat':
@@ -94,9 +89,17 @@ function Tile(props) {
         return null;
     }
   })(props.tiledata.type);
+  let addOrNot = props.addToFavorites ? true : false
+  let buttonType = addOrNot ? 'Add' : 'Remove'
+  let handler = addOrNot ? props.addToFavorites : props.removeFromFavorites
   return (
-    <div className="tile">
-  	  {tile}
+    <div>
+      <div className="tile">
+    	  {tile}
+        <div className={`${buttonType.toLowerCase()}button`}>
+          <button type="text" onClick={event => handler(props.tiledata.id, event)}>{buttonType}</button>
+        </div>
+      </div>
     </div>
   );
 }
