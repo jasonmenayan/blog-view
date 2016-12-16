@@ -94,12 +94,14 @@ function Tile(props) {
   let handler = addOrNot ? props.addToFavorites : props.removeFromFavorites
   return (
     <div>
-      <div className="tile">
-    	  {tile}
-        <div className={`${buttonType.toLowerCase()}button`}>
-          <button type="text" onClick={event => handler(props.tiledata.id, event)}>{buttonType}</button>
+      <a href={props.tiledata.post_url} target="_blank">
+        <div className="tile">
+      	  {tile}
+          <div className={`${buttonType.toLowerCase()}button`}>
+            <button type="text" onClick={event => handler(props.tiledata.id, event)}>{buttonType}</button>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   );
 }
